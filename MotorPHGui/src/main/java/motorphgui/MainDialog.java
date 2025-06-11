@@ -4,6 +4,8 @@
  */
 package motorphgui;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author admin
@@ -113,24 +115,33 @@ public class MainDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_MEDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_MEDetailsActionPerformed
-        // TODO add your handling code here:
+    private void btn_MEDetailsActionPerformed(java.awt.event.ActionEvent evt) {                                              
+//GEN-FIRST:event_btn_MEDetailsActionPerformed
+    Employee_Details empDetails = new Employee_Details(null, true);    
+    empDetails.setVisible(true);    // TODO add your handling code here: 
     }//GEN-LAST:event_btn_MEDetailsActionPerformed
 
-    private void btn_MAttendanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_MAttendanceActionPerformed
-        // TODO add your handling code here:
+    private void btn_MAttendanceActionPerformed(java.awt.event.ActionEvent evt) {                                                
+//GEN-FIRST:event_btn_MAttendanceActionPerformed
+    View_Attendance attendance = new View_Attendance(null, true);
+attendance.setVisible(true);
     }//GEN-LAST:event_btn_MAttendanceActionPerformed
 
-    private void btn_MExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_MExitActionPerformed
-        // TODO add your handling code here:
+    private void btn_MExitActionPerformed(java.awt.event.ActionEvent evt) {                                          
+//GEN-FIRST:event_btn_MExitActionPerformed
+    System.exit(0);
     }//GEN-LAST:event_btn_MExitActionPerformed
 
-    private void btn_MWHoursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_MWHoursActionPerformed
-        // TODO add your handling code here:
+    private void btn_MWHoursActionPerformed(java.awt.event.ActionEvent evt) {                                            
+//GEN-FIRST:event_btn_MWHoursActionPerformed
+    View_Attendance workHours = new View_Attendance(null, true);
+workHours.setVisible(true);
     }//GEN-LAST:event_btn_MWHoursActionPerformed
 
-    private void btn_MPPayrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_MPPayrollActionPerformed
-        // TODO add your handling code here:
+    private void btn_MPPayrollActionPerformed(java.awt.event.ActionEvent evt) {                                              
+//GEN-FIRST:event_btn_MPPayrollActionPerformed
+    ProcessPayroll payroll = new ProcessPayroll(); 
+    payroll.setVisible(true); // Opens a new window showing payroll summary
     }//GEN-LAST:event_btn_MPPayrollActionPerformed
 
     /**
@@ -181,4 +192,10 @@ public class MainDialog extends javax.swing.JDialog {
     private javax.swing.JButton btn_MWHours;
     private javax.swing.JLabel lbl_main;
     // End of variables declaration//GEN-END:variables
-}
+
+    // ✅ Custom fields (inside class)
+    private javax.swing.JTable payrollTable;
+    private javax.swing.JScrollPane payrollScrollPane;
+    private javax.swing.table.DefaultTableModel payrollTableModel;
+
+} // 
