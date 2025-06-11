@@ -4,20 +4,38 @@
  */
 package motorphgui;
 
-/**
- *
- * @author admin
- */
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Employee_Details extends javax.swing.JDialog {
 
-    /**
-     * Creates new form Employee_Details
-     */
     public Employee_Details(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-    }
+    lblEmpNo = new javax.swing.JLabel("Employee #: ");
+    lblLastName = new javax.swing.JLabel("Last Name: ");
+    lblFirstName = new javax.swing.JLabel("First Name: ");
+    lblPosition = new javax.swing.JLabel("Position: ");
+    lblResultHeader = new javax.swing.JLabel("");
 
+    // ✅ Add them to the existing content pane (you can adjust layout later)
+    getContentPane().add(lblEmpNo);
+    getContentPane().add(lblLastName);
+    getContentPane().add(lblFirstName);
+    getContentPane().add(lblPosition);
+    getContentPane().add(lblResultHeader);
+
+    // ✅ Optional: Set layout to null and manually set positions (quick and dirty)
+    setLayout(null);
+
+    lblEmpNo.setBounds(50, 120, 300, 20);
+    lblLastName.setBounds(50, 150, 300, 20);
+    lblFirstName.setBounds(50, 180, 300, 20);
+    lblPosition.setBounds(50, 210, 300, 20);
+    lblResultHeader.setBounds(50, 240, 300, 20);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,6 +49,8 @@ public class Employee_Details extends javax.swing.JDialog {
         lbl_ED = new javax.swing.JLabel();
         txt_EDEmpID = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -70,6 +90,14 @@ public class Employee_Details extends javax.swing.JDialog {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(71, 71, 71)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,48 +110,60 @@ public class Employee_Details extends javax.swing.JDialog {
                     .addComponent(txt_EDEmpID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_EDEmpIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_EDEmpIDActionPerformed
-        // TODO add your handling code here:
+        jButton1ActionPerformed(evt); // Trigger search when Enter is pressed
+
     }//GEN-LAST:event_txt_EDEmpIDActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        String searchId = txt_EDEmpID.getText().trim();
+        String csvPath = "C:\\Users\\HP\\OneDrive\\Desktop\\CP2\\Motorph\\employee.csv";
+        boolean found = false;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvPath))) {
+            String headerLine = br.readLine(); // skip headers
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+
+                if (values.length > 0 && values[0].equals(searchId)) {
+                    lblEmpNo.setText("Employee #: " + values[0]);
+                    lblLastName.setText("Last Name: " + values[1]);
+                    lblFirstName.setText("First Name: " + values[2]);
+                    lblPosition.setText("Position: " + values[12]); // Adjust index if needed
+                    lblResultHeader.setText("Employee found.");
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                lblEmpNo.setText("Employee #: Not found");
+                lblLastName.setText("Last Name: -");
+                lblFirstName.setText("First Name: -");
+                lblPosition.setText("Position: -");
+                lblResultHeader.setText("No matching employee ID.");
+            }
+        } catch (IOException ex) {
+            lblResultHeader.setText("Error reading file.");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Employee_Details.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Employee_Details.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Employee_Details.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Employee_Details.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Employee_Details dialog = new Employee_Details(new javax.swing.JFrame(), true);
@@ -138,10 +178,18 @@ public class Employee_Details extends javax.swing.JDialog {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbl_ED;
     private javax.swing.JLabel lbl_main;
     private javax.swing.JTextField txt_EDEmpID;
     // End of variables declaration//GEN-END:variables
+    private javax.swing.JLabel lblEmpNo;
+    private javax.swing.JLabel lblLastName;
+    private javax.swing.JLabel lblFirstName;
+    private javax.swing.JLabel lblPosition;
+    private javax.swing.JLabel lblResultHeader;
 }
