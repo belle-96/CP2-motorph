@@ -6,21 +6,14 @@ package motorphgui;
 
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-/**
- *
- * @author admin
- */
+
 public class MainDialog extends javax.swing.JDialog {
 
-    /**
-     * Creates new form MainDialog
-     * @param parent
-     * @param modal
-     */
     public MainDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-    }
+
+    }       
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -140,19 +133,16 @@ workHours.setVisible(true);
 
     private void btn_MPPayrollActionPerformed(java.awt.event.ActionEvent evt) {                                              
 //GEN-FIRST:event_btn_MPPayrollActionPerformed
-    ProcessPayroll payroll = new ProcessPayroll(); 
-    payroll.setVisible(true); // Opens a new window showing payroll summary
+    this.setVisible(false); // Hide main dialog while payroll is open
+    java.awt.EventQueue.invokeLater(() -> {
+        new ProcessPayroll().setVisible(true);
+    });
     }//GEN-LAST:event_btn_MPPayrollActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -160,18 +150,10 @@ workHours.setVisible(true);
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (Exception ex) {
             java.util.logging.Logger.getLogger(MainDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(() -> {
             MainDialog dialog = new MainDialog(new javax.swing.JFrame(), true);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -183,6 +165,7 @@ workHours.setVisible(true);
             dialog.setVisible(true);
         });
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_MAttendance;
