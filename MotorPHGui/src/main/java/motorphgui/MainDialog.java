@@ -4,11 +4,15 @@
  */
 package motorphgui;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class MainDialog extends javax.swing.JDialog {
-
+    private java.awt.Frame parentFrame;
     public MainDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -101,7 +105,7 @@ public class MainDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_MPPayroll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_MExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_MExit, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
         );
 
@@ -110,8 +114,42 @@ public class MainDialog extends javax.swing.JDialog {
 
     private void btn_MEDetailsActionPerformed(java.awt.event.ActionEvent evt) {                                              
 //GEN-FIRST:event_btn_MEDetailsActionPerformed
-    Employee_Details empDetails = new Employee_Details(null, true);    
-    empDetails.setVisible(true);    // TODO add your handling code here: 
+
+        String searchId = JOptionPane.showInputDialog(this, "Enter Employee ID to search:");
+
+    if (searchId != null && !searchId.trim().isEmpty()) {
+        boolean found = false;
+
+        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\HP\\OneDrive\\Desktop\\CP2\\Motorph\\employee.csv"))) {
+            String line;
+            boolean skipHeader = true;
+
+            while ((line = br.readLine()) != null) {
+                if (skipHeader) {
+                    skipHeader = false;
+                    continue;
+                }
+
+                String[] data = line.split(",");
+                if (data.length > 0 && data[0].trim().equalsIgnoreCase(searchId.trim())) {
+                    Employee emp = new Employee(data);  // assumes you have a constructor like: Employee(String[] data)
+
+                    Employee_DetailsResult dialog = new Employee_DetailsResult(parentFrame, true);
+                    dialog.setEmployeeDetails(emp);
+                    dialog.setVisible(true);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                JOptionPane.showMessageDialog(this, "Employee ID not found.", "Not Found", JOptionPane.WARNING_MESSAGE);
+            }
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error reading employee file: " + e.getMessage(), "File Error", JOptionPane.ERROR_MESSAGE);
+        } } 
+        // TODO add your handling code here: 
     }//GEN-LAST:event_btn_MEDetailsActionPerformed
 
     private void btn_MAttendanceActionPerformed(java.awt.event.ActionEvent evt) {                                                

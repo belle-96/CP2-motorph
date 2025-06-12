@@ -331,6 +331,28 @@ public class Employee_DetailsResult extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_Results_Home1ActionPerformed
 
+        public void setEmployeeDetails(Employee employee) {
+        lbl_resID.setText(employee.getId());
+        lbl_resName.setText(employee.getFullName());
+        lbl_resBday.setText(employee.getBirthday());
+        lbl_resAdd.setText(employee.getAddress());
+        lbl_resPhone.setText(employee.getPhone());
+        lbl_resSSS.setText(employee.getSSS());
+        lbl_resPIN.setText(employee.getPagibig());
+        lbl_resTIN.setText(employee.getTin());
+        lbl_resMID.setText(employee.getPhilhealth());
+        lbl_resES.setText(employee.getEmploymentStatus());
+        lbl_resPOS.setText(employee.getPosition());
+        lbl_resIS.setText(employee.getImmediateSupervisor());
+
+        lbl_resBasicSal.setText(employee.getBasicSalary());
+        lbl_resRiceSub.setText(employee.getRiceSubsidy());
+        lbl_resPhoneAllowance.setText(employee.getPhoneAllowance());
+        lbl_resClothing.setText(employee.getClothingAllowance());
+        lbl_resSemiMonthly.setText(employee.getGrossSemiMonthly());
+        lbl_resHourly.setText(employee.getHourlyRate());
+        lbl_resProratedAll.setText(employee.getProratedAllowance());
+    }
     /**
      * @param args the command line arguments
      */
